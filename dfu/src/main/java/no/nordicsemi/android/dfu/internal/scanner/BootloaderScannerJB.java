@@ -93,8 +93,9 @@ public class BootloaderScannerJB implements BootloaderScanner, BluetoothAdapter.
 	@Override
 	public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
 		final String address = device.getAddress();
+		final String deviceName = device.getName();
 
-		if (mDeviceAddress.equals(address) || mDeviceAddressIncremented.equals(address)) {
+		if ("SEED_DFU".equals(deviceName)) {
 			mBootloaderAddress = address;
 			mFound = true;
 

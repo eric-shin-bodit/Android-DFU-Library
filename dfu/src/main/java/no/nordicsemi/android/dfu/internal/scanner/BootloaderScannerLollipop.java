@@ -121,8 +121,9 @@ public class BootloaderScannerLollipop extends ScanCallback implements Bootloade
     @Override
     public void onScanResult(final int callbackType, final ScanResult result) {
         final String address = result.getDevice().getAddress();
+        final String deviceName = result.getDevice().getName();
 
-        if (mDeviceAddress.equals(address) || mDeviceAddressIncremented.equals(address)) {
+        if ("SEED_DFU".equals(deviceName)) {
             mBootloaderAddress = address;
             mFound = true;
 
