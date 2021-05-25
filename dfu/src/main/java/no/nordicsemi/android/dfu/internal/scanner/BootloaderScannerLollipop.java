@@ -30,6 +30,7 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.os.Build;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -46,6 +47,8 @@ public class BootloaderScannerLollipop extends ScanCallback implements Bootloade
     private String mDeviceAddressIncremented;
     private String mBootloaderAddress;
     private boolean mFound;
+
+    private final String TARGET_DEVICE_NAME = "SEED_DFU";
 
     @Override
     public String searchFor(final String deviceAddress) {
@@ -95,8 +98,10 @@ public class BootloaderScannerLollipop extends ScanCallback implements Bootloade
         final ScanSettings settings = new ScanSettings.Builder().setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY).build();
         if (adapter.isOffloadedFilteringSupported() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             final List<ScanFilter> filters = new ArrayList<>();
-            filters.add(new ScanFilter.Builder().setDeviceAddress(mDeviceAddress).build());
-            filters.add(new ScanFilter.Builder().setDeviceAddress(mDeviceAddressIncremented).build());
+//            filters.add(new ScanFilter.Builder().setDeviceAddress(mDeviceAddress).build());
+//            filters.add(new ScanFilter.Builder().setDeviceAddress(mDeviceAddressIncremented).build());
+//            filters.add(new ScanFilter.Builder().setServiceUuid(ParcelUuid.fromString("FE59")).build());
+            filters.add(new ScanFilter.Builder().setDeviceName(TARGET_DEVICE_NAME).build());
             scanner.startScan(filters, settings, this);
         } else {
             /*
@@ -126,7 +131,7 @@ public class BootloaderScannerLollipop extends ScanCallback implements Bootloade
 
         Log.d("BootloaderScannerLP", "Found device: " + deviceName + " / " + address);
 
-        if ("SEED_DFU".equals(deviceName)) {
+        if (deviceName.equals(TARGET_DEVICE_NAME)) {
             mBootloaderAddress = address;
             mFound = true;
 
