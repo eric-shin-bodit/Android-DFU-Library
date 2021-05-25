@@ -30,6 +30,7 @@ import android.bluetooth.le.ScanFilter;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -122,6 +123,8 @@ public class BootloaderScannerLollipop extends ScanCallback implements Bootloade
     public void onScanResult(final int callbackType, final ScanResult result) {
         final String address = result.getDevice().getAddress();
         final String deviceName = result.getDevice().getName();
+
+        Log.d("BootloaderScannerLP", "Found device: " + deviceName + " / " + address);
 
         if ("SEED_DFU".equals(deviceName)) {
             mBootloaderAddress = address;

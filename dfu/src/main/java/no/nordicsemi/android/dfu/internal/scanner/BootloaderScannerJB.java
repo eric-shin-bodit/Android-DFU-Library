@@ -24,6 +24,7 @@ package no.nordicsemi.android.dfu.internal.scanner;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -94,6 +95,8 @@ public class BootloaderScannerJB implements BootloaderScanner, BluetoothAdapter.
 	public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
 		final String address = device.getAddress();
 		final String deviceName = device.getName();
+
+		Log.d("BootloaderScannerJB", "Found device: " + deviceName + " / " + address);
 
 		if ("SEED_DFU".equals(deviceName)) {
 			mBootloaderAddress = address;
