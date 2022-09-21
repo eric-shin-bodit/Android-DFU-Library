@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="no.nordicsemi.dfu.profile">
+
+    <!-- BLUETOOTH permissions are added by lib_dfu module. -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+
+    <application>
+        <service android:name=".main.repository.DFUService" />
+    </application>
+</manifest>
